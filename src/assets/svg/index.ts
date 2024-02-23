@@ -15,7 +15,7 @@ export {
 } from './crossIcon';
 
 export {
-    default as appleIcon
+    default as AppleIcon
 } from './appleIcon';
 
 export {

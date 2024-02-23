@@ -14,6 +14,7 @@ declare global {
       greyColors50: string;
       stronkLight: string;
       stronkDark: string;
+      textBlack: string;
       textWhite: string;
       secondary: string;
       success50: string;

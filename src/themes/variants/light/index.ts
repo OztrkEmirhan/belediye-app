@@ -19,6 +19,7 @@ export const colors: Required<UIColor.ColorType> = {
     greyBase: '#697488',
     greyColors700: '#4B5261',
     stronkDark: '#242629',
+    textBlack: "#191919",
     stronkLight: '#E2E2E2',
     success: '#16A34A',
     success50: '#F0FDF4',
