@@ -25,8 +25,8 @@ const Button: FC<IButtonProps> = ({
         justifyContent: "center",
         alignItems: "center",
         paddingVertical:15,
-        borderRadius: 13,
-        marginBottom: 10,
+        borderRadius: 12,
+        marginBottom:10,
         opacity:1,
         ...style,
     };

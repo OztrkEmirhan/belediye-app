@@ -2,24 +2,34 @@ import {
     StyleSheet
 } from "react-native";
 import {
-    colors 
+    colors
 } from "../../../themes/variants/light";
 
 export default StyleSheet.create({
+    goBack: {
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 21,
+        height: 42,
+        width: 42
+    },
+    headerTitle: {
+        position: "absolute"
+    },
     container: {
         backgroundColor: colors.backgroundLight,
-        flex: 1
+        flex: 1,
     },
     content: {
         marginHorizontal: 22,
         flex: 1
     },
     loginInformationText: {
-        marginVertical: 8,
+        marginVertical: 8
     },
     inputView: {
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
     },
     orlineContainer: {
         flexDirection: "row",
@@ -38,7 +48,7 @@ export default StyleSheet.create({
     },
     socialIconButton:{
         flexDirection:"row",
-        alignItems:"center",
+        alignItems:"center"
     },
     socialGoogleButtonText: {
         marginLeft:10
@@ -47,8 +57,8 @@ export default StyleSheet.create({
         marginLeft:10
     },
     restartpassword: {
-        flexDirection: 'row',
         justifyContent:"flex-end",
+        flexDirection: 'row'
     },
     buttonContainer:{  
         marginTop:20

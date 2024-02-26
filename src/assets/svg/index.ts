@@ -21,3 +21,7 @@ export {
 export {
     default as EyeIcon
 } from './eyeIcon';
+
+export {
+    default as GoBackIcon
+} from './goBackIcon';

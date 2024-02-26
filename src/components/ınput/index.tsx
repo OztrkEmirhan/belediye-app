@@ -8,34 +8,36 @@ import {
     View
 } from "react-native";
 import {
-    stylesheet 
+    stylesheet
 } from "./stylesheet";
 import {
     IInputProps
 } from "./types";
 import {
+    EyeClosedIcon,
+    EyeIcon 
+} from "../../assets/svg";
+import {
     colors
 } from "../../themes/variants/light";
 
 const Input: FC<IInputProps> = ({
-    renderRight: RenderRightProps,
-    renderLeft: RenderLeftProps,
+    secureTextEntry = false,
     isValidateOnChangeText,
     onFocus: onFocusProp,
-    isShowGoBack = false,
     onBlur: onBlurProp,
+    isShowable = false,
     isError = false,
     title = "Title",
     initialValue,
     onChangeText,
-    iconOnPress,
     onValidate,
     disabled,
-    onGoBack
 }) => {
     const [value, setValue] = useState(initialValue ? initialValue : "");
+    const [isShowingPassword, setIsShowingPassword] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
-
+    
     const onFocusInternal = () => {
         setIsFocused(true);
         if (onFocusProp) onFocusProp();
@@ -46,47 +48,15 @@ const Input: FC<IInputProps> = ({
         if (onBlurProp) onBlurProp();
     };
 
-    const renderLeft = () => {
-        if (RenderLeftProps) {
-            return <RenderLeftProps />;
-        }
-
-        if (!isShowGoBack) {
-            return null;
-        }
-
-        return <TouchableOpacity
-            onPress={onGoBack}
-        >
-            <RenderLeftProps />
-        </TouchableOpacity>;
-    };
-
-    const renderRight = () => {
-        if(!RenderRightProps) {
-            return null;
-        }
-
-        if (RenderRightProps) {
-            return <TouchableOpacity
-                onPress={iconOnPress}
-                style={{
-                    position:"absolute",
-                    right:20,
-                }}>
-                <RenderRightProps />
-            </TouchableOpacity>;
-        }
-    };
-
     const renderTextInput = () => {
         return (
             <NativeTextInput
-                placeholder={title}
+                secureTextEntry={isShowable ? secureTextEntry && !isShowingPassword : secureTextEntry}
                 placeholderTextColor={colors.textGrey}
                 onFocus={onFocusInternal}
                 onBlur={onBlurInternal}
                 editable={!disabled}
+                placeholder={title}
                 value={value}
                 style={{
                     ...stylesheet.input,
@@ -106,24 +76,41 @@ const Input: FC<IInputProps> = ({
         );
     };
 
+    const renderSecureIcon = () => {
+        if(!isShowable || !secureTextEntry) {
+            return null;
+        }
+
+        if(!isShowingPassword) {
+            return <TouchableOpacity
+                onPress={() => {
+                    console.log("Eye icon pressed");
+                    setIsShowingPassword(!isShowingPassword);
+                }}
+            >
+                <EyeClosedIcon/>
+            </TouchableOpacity>;
+        };
+
+        return <TouchableOpacity
+            onPress={() => {
+                console.log("Eye icon pressed");
+                setIsShowingPassword(!isShowingPassword);
+            }}
+        >
+            <EyeIcon/>
+        </TouchableOpacity>;
+    };
+
     return (
         <View
             style={{
-                justifyContent: 'space-between',
-                flexDirection: 'row',
-                alignItems: 'center',
+                ...stylesheet.container,
+                borderColor: isError ? colors.error : isFocused ? colors.primary : colors.stronkLight,
             }}
         >
-            {renderLeft()}
-            <View
-                style={{
-                    ...stylesheet.container,
-                    borderColor: isError ? colors.error : isFocused ? colors.primary : colors.stronkLight,
-                }}
-            >
-                {renderTextInput()}
-            </View>
-            {renderRight()}
+            {renderTextInput()}
+            {renderSecureIcon()}
         </View>
     );
 };

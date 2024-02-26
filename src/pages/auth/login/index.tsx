@@ -4,29 +4,37 @@ import React, {
 import {
     TouchableOpacity,
     SafeAreaView,
-    View,
+    ScrollView,
+    StatusBar,
+    View
 } from 'react-native';
 import stylesheet from './stylesheet';
 import {
     Typography,
     Input
 } from '../../../components';
+import Button from '../../../components/button';
+import {
+    GoogleIcon,
+    AppleIcon
+} from '../../../assets/svg';
+import {
+    Routes 
+} from '../../../navigation/routes';
+import {
+    useNavigation
+} from '@react-navigation/native';
 import {
     colors
 } from '../../../themes/variants/light';
 import {
-    GoogleIcon,
-    AppleIcon,
-    EyeIcon
-} from '../../../assets/svg';
-import {
     windowWidth
 } from '../../../utils';
-import Button from '../../../components/button';
 
 const Login = () => {
     const [password,setPassword] = useState("");
     const [email,setEmail] = useState("");
+    const navigation = useNavigation();
 
     const renderSocialLoginButtons = () => {
         return <View
@@ -36,8 +44,8 @@ const Login = () => {
                 style={[
                     stylesheet.socialLoginButton,
                     {
-                        backgroundColor: colors.white,
                         borderColor: colors.stronkLight,
+                        backgroundColor: colors.white,
                         paddingHorizontal: 20,
                         paddingVertical: 15,
                         borderRadius: 15,
@@ -133,98 +141,99 @@ const Login = () => {
         </View>;
     };
     
-    return (
-        <SafeAreaView 
-            style={
-                stylesheet.container
-            }
-        >
+    return <SafeAreaView 
+        style={
+            stylesheet.container
+        }
+    >
+        <StatusBar
+            backgroundColor={colors.backgroundLight}
+            barStyle={'default'}
+        />
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={stylesheet.content}>
             <View 
-                style={stylesheet.content}>
-                <View 
-                    style={{
-                        marginVertical: 30
-                    }}
+                style={{
+                    marginBottom:30,
+                    marginTop:60
+                }}
+            >
+                <Typography
+                    variant='header3-bold'
+                    color="textBlack"
                 >
-                    <Typography
-                        variant='header3-bold'
-                        color="textBlack"
-                    >
                         Giriş Yap
-                    </Typography>
+                </Typography>
 
-                    <Typography
-                        variant='body-regular'
-                        color="textGrey"
-                    >
+                <Typography
+                    variant='body-regular'
+                    color="textGrey"
+                >
                         Tekrar hoş geldiniz!👋
-                    </Typography>
-                </View>
-
-                <View>
-                    <Typography 
-                        style={stylesheet.loginInformationText}
-                        variant="body2-semiBold"
-                        color='textDark'
-                    >
-                        Giriş Bilgilerin
-                    </Typography>
-
-                    <View
-                        style={
-                            stylesheet.inputView
-                        }
-                    >
-                        <Input
-                            title='Kullancı adı veya E-Posta adresiniz'
-                            onChangeText={(text) => setEmail(text)}
-                            initialValue={email}
-                        />
-
-                        <Input
-                            onChangeText={(text) => setPassword(text)}
-                            renderRight={() => <EyeIcon />}
-                            initialValue={password}
-                            title='Şifre'
-                        />
-                    </View>
-                </View>
-
-                <View
-                    style={
-                        stylesheet.restartpassword
-                    }
-                >
-                    <Typography 
-                        color='primary'
-                        variant='body2-medium'
-                    >
-                        Şifremi Unuttum
-                    </Typography>
-                </View>
-
-                <View
-                    style={
-                        stylesheet.buttonContainer
-                    }
-                >
-                    <Button
-                        onPress={() =>{}}
-                        title='Giriş Yap'
-                        variant='filled'
-                    />
-                    <Button
-                        onPress={() =>{}}
-                        title='Hemen Üye Ol'
-                        variant='outline'
-
-                    />
-                </View>
-                {renderOrLine()}
-                {renderSocialLoginButtons()}
+                </Typography>
             </View>
-        </SafeAreaView>
-    );
+            <View>
+                <Typography 
+                    style={stylesheet.loginInformationText}
+                    variant="body2-semiBold"
+                    color='textDark'
+                >
+                        Giriş Bilgilerin
+                </Typography>
+                <View
+                    style={
+                        stylesheet.inputView
+                    }
+                >
+                    <Input
+                        title='Kullancı adı veya E-Posta adresiniz'
+                        onChangeText={(text) => setEmail(text)}
+                        initialValue={email}
+                    />
+
+                    <Input
+                        onChangeText={(text) => setPassword(text)}
+                        initialValue={password}
+                        secureTextEntry={true}
+                        isShowable={true}
+                        title='Şifre'
+                    />
+                </View>
+            </View>
+            <View
+                style={
+                    stylesheet.restartpassword
+                }
+            >
+                <Typography 
+                    variant='body2-medium'
+                    color='primary'
+                >
+                        Şifremi Unuttum
+                </Typography>
+            </View>
+            <View
+                style={
+                    stylesheet.buttonContainer
+                }
+            >
+                <Button
+                    onPress={() => navigation.navigate(Routes.BOTTOM_NAVIGATOR as never)}
+                    title='Giriş Yap'
+                    variant='filled'
+                />
+                <Button
+                    onPress={() => navigation.navigate(Routes.REGISTER_SCREEN as never)}
+                    title='Hemen Üye Ol'
+                    variant='outline'
+
+                />
+            </View>
+            {renderOrLine()}
+            {renderSocialLoginButtons()}
+        </ScrollView>
+    </SafeAreaView>;
 };
 
 export default Login;
