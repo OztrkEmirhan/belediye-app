@@ -11,5 +11,15 @@ export {
 } from "./button";
 
 export {
-    default as header
+    default as Header
 } from './header';
+
+export {
+    default as ProfileCard
+} from "./profileCard";
+
+export {
+    default as RowCard
+} from "./rowCard";
+
+

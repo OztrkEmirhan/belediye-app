@@ -7,13 +7,13 @@ import {
 } from '@react-navigation/native-stack';
 import {
     AuthNavigatorScreen
-} from './authNavigation';
+} from '../authNavigation';
 import {
     BottomNavigatorScreen
-} from './bottomNavigaiton';
+} from '../bottomNavigaiton';
 import {
     Routes
-} from './routes';
+} from '../routes';
 
 const MainNavigator = createNativeStackNavigator();
 

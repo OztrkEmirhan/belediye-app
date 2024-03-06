@@ -3,6 +3,7 @@ declare global {
     interface ColorType {
       backgroundBlack: string;
       backgroundLight: string;
+      primaryOpacity: string;
       blackColors200: string;
       blackColors100: string;
       textSecondary: string;

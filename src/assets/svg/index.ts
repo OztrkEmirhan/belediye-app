@@ -25,3 +25,43 @@ export {
 export {
     default as GoBackIcon
 } from './goBackIcon';
+
+export {
+    default as SharedIcon
+} from './sharedIcon';
+
+export {
+    default as PenIcon
+} from './penIcon';
+
+export {
+    default as CallIcon
+} from "./callIcon";
+
+export {
+    default as HandsIcon
+} from "./handsIcon";
+
+export {
+    default as MessageIcon
+} from "./messageIcon";
+
+export {
+    default as ProfileShareIcon
+} from "./profileShareIcon";
+
+export {
+    default as ExitIcon
+} from "./exitIcon";
+
+export {
+    default as AltArrowRight
+} from "./altArrowRightIcon";
+
+export {
+    default as LikeIcon
+} from "./likeIcon";
+
+export {
+    default as MailBoxIcon
+} from "./mailBoxIcon";

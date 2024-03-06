@@ -1,17 +1,24 @@
 import React from 'react';
 import {
-    MainNavigatorScreen
-} from './navigation';
+    SafeAreaView 
+} from 'react-native';
+import stylesheet from './stylesheet';
 import {
-    SafeAreaProvider
-} from 'react-native-safe-area-context';
+    MainNavigatorScreen
+} from './navigation/mainNavigation';
+import {
+    colors 
+} from './themes/variants/light';
 
 function App() {
-    return (
-        <SafeAreaProvider>
-            <MainNavigatorScreen />
-        </SafeAreaProvider>
-    );
+    return <SafeAreaView
+        style={{
+            ...stylesheet.container,
+            backgroundColor: colors.backgroundLight
+        }}
+    >
+        <MainNavigatorScreen/>
+    </SafeAreaView>;
 }
 
 export default App;

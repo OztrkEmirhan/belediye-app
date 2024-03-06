@@ -4,6 +4,10 @@ import {
 
 const stylesheet = StyleSheet.create({
     container: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    title: {
         flex: 1
     }
 });

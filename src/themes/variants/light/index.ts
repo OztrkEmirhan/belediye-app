@@ -29,6 +29,7 @@ export const colors: Required<UIColor.ColorType> = {
     warning50: '#FEF7E8',
     blue: '#2563EB',
     blue50: '#EFF6FF',
+    primaryOpacity: "#F5FAFF"
 };
 
 export const typography: Required<UITypography.TypographyType> = {

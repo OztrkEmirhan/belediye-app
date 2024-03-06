@@ -1,54 +1,51 @@
 import React, {
     FC
-} from "react";
+} from 'react';
 import {
-    TouchableOpacity,
-    ViewStyle
-} from "react-native";
-import Typography from "../typography";
+    TouchableOpacity
+} from 'react-native';
+import {
+    buttonStyles
+} from './stylesheet';
+import Typography from '../typography';
 import {
     IButtonProps
-} from "./types";
+} from './types';
 import {
     colors
-} from "../../themes/variants/light";
+} from '../../themes/variants/light';
 
 const Button: FC<IButtonProps> = ({
+    variant = 'filled',
     disabled = false,
-    variant = "filled",
     onPress,
     title,
     style,
 }) => {
 
-    const buttonStyle: ViewStyle = {
-        justifyContent: "center",
-        alignItems: "center",
-        paddingVertical:15,
-        borderRadius: 12,
-        marginBottom:10,
-        opacity:1,
-        ...style,
-    };
-
-    if (variant === "outline") {
-        buttonStyle.borderColor = colors.primary;
-        buttonStyle.backgroundColor = "white";
-        buttonStyle.borderWidth = 1;
+    const styles = [
+        buttonStyles.button,
+        style
+    ];
+    if (variant === 'outline') {
+        styles.push(buttonStyles.outlineButton);
     } else {
-        buttonStyle.backgroundColor = disabled ? colors.primary : colors.primary;
-        buttonStyle.opacity= disabled ? 0.5 : 1;
+        styles.push(buttonStyles.filledButton);
+
+        if (disabled) {
+            styles.push(buttonStyles.disabledButton);
+        }
     }
 
     return (
         <TouchableOpacity
             onPress={disabled ? undefined : onPress}
             disabled={disabled}
-            style={buttonStyle}
+            style={styles}
         >
             <Typography
                 //@ts-ignore
-                color={variant === "outline" ? colors.primary : "white"}
+                color={variant === 'outline' ? colors.primary : 'white'}
                 variant="body2-medium"
             >
                 {title}

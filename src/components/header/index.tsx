@@ -23,7 +23,6 @@ const Header = ({
     title,
     style
 }: IHeaderProps ) => {
-
     const renderBottomContainer = () => {
         if(!renderBottom) {
             return null;
@@ -43,11 +42,11 @@ const Header = ({
             style={[
                 stylesheet.container,
                 {
-                    paddingTop: Platform.OS === 'ios' ? 20 : 10,
                     paddingBottom: renderBottom ? 0 : 10,
                     borderBottomColor: colors.white,
                     backgroundColor: colors.white,
                     paddingHorizontal: 15,
+                    paddingTop:10
                 },
                 style
             ]}
@@ -89,7 +88,7 @@ const Header = ({
                         headerLocation === "center" ? {
                             position: "absolute",
                             flex: undefined,
-                            right: -10
+                            right: -20
                         } : null
                     ]}
                 >
