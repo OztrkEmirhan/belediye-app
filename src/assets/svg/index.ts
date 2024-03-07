@@ -65,3 +65,15 @@ export {
 export {
     default as MailBoxIcon
 } from "./mailBoxIcon";
+
+export {
+    default as HomeIcon
+} from "./homeIcon";
+
+export {
+    default as BellIcon
+} from "./bellIcon";
+
+export {
+    default as UserIcon
+} from "./userIcon";
