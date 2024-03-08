@@ -22,10 +22,12 @@ import {
     useNavigation 
 } from '@react-navigation/native';
 import Switch from '../../../components/switch';
+import CheckBox from '../../../components/checkBox';
 
 const RegisterScreen = () => {
     const navigation = useNavigation();
     const [callMe, setCallMe] = useState(false);
+    const [isSelected, setIsSelected] = useState(false);
     
     useEffect(() => {
         navigation.setOptions({
@@ -74,6 +76,11 @@ const RegisterScreen = () => {
                 title='merhaba'
                 onPress={() => setCallMe(!callMe)}
                 isActive={callMe}/>
+            <CheckBox
+                title="Check"
+                isSelected={isSelected}
+                onChange={() => setIsSelected(!isSelected)}
+            />
         </View>
     );
 };
