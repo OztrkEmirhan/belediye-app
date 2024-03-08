@@ -40,7 +40,8 @@ export default StyleSheet.create({
         alignContent: "space-around",
         flexDirection: "row",
         alignItems: "center",
-        marginTop:30
+        marginTop:30,
+        marginBottom:30,
     },
     socialLoginButton: {
         alignItems: "center",

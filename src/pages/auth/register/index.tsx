@@ -1,5 +1,6 @@
 import React, {
-    useEffect
+    useEffect,
+    useState
 } from 'react';
 import {
     TouchableOpacity,
@@ -20,9 +21,11 @@ import {
 import {
     useNavigation 
 } from '@react-navigation/native';
+import Switch from '../../../components/switch';
 
 const RegisterScreen = () => {
     const navigation = useNavigation();
+    const [callMe, setCallMe] = useState(false);
     
     useEffect(() => {
         navigation.setOptions({
@@ -66,6 +69,11 @@ const RegisterScreen = () => {
     return (
         <View>
             <Text>RegisterScreen</Text>
+            <Switch
+                spreadBehaviour='stretch'
+                title='merhaba'
+                onPress={() => setCallMe(!callMe)}
+                isActive={callMe}/>
         </View>
     );
 };
