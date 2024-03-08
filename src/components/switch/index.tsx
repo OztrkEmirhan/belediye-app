@@ -105,17 +105,19 @@ const Switch: FC<ISwitchProps> = ({
         </View>;
     };
 
-    return <TouchableOpacity
+    return <View
         style={[
             stylesheet.container,
             container,
             style
         ]}
-        disabled={disabled}
-        onPress={disabled ? undefined : onPress}
     >
         {renderTitle()}
-        {renderSwitch()}
-    </TouchableOpacity>;
+        <TouchableOpacity
+            disabled={disabled}
+            onPress={disabled ? undefined : onPress}>
+            {renderSwitch()}
+        </TouchableOpacity>
+    </View>;
 };
 export default Switch;
