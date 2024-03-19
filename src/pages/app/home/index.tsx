@@ -22,9 +22,9 @@ export type BottomSheet = {
 }
 
 const HomeScreen = () => {
-    const bottomSheetRef = useRef<BottomSheet>(null);
     const bottomSheetRef2 = useRef<BottomSheet>(null);
     const bottomSheetRef3 = useRef<BottomSheet>(null);
+    const bottomSheetRef = useRef<BottomSheet>(null);
 
     const {
         height 
@@ -43,27 +43,31 @@ const HomeScreen = () => {
     }, []);
 
     return (
-        <GestureHandlerRootView 
+        <GestureHandlerRootView
             style={{
                 flex: 1 
             }}>
-            <SafeAreaView 
-                style={styles.container}
+            <SafeAreaView
+                style={
+                    styles.container
+                }
             >
-                <View style={
-                    styles.buttonContainer
-                }>
-                    <Button 
+                <View
+                    style={
+                        styles.buttonContainer
+                    }
+                >
+                    <Button
                         onPress={pressHandler}
-                        title="Blank" 
+                        title=""
                     />
                     <Button
                         onPress={pressHandler2} 
-                        title="Example 1"
+                        title=""
                     />
                     <Button
                         onPress={pressHandler3}
-                        title="Example 2"
+                        title=""
                     />
                 </View>
                 <BottomSheet
@@ -95,14 +99,14 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
         backgroundColor: 'white',
         justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
     },
     buttonContainer: {
-        flexDirection: 'row',
         justifyContent: 'space-around',
-        marginBottom: 20,
+        flexDirection: 'row',
+        marginBottom: 20
     },
 });

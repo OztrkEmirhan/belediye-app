@@ -21,7 +21,6 @@ import {
 import {
     useNavigation
 } from '@react-navigation/native';
-import BottomSheet from '../../../components/bottomSheet';
 
 const NoticesScreen = () => {
     const navigation = useNavigation();

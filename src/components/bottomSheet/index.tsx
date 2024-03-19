@@ -133,7 +133,9 @@ const BottomSheet = forwardRef(
                         ]}
                     />
                 </TouchableWithoutFeedback>
-                <GestureDetector gesture={pan}>
+                <GestureDetector 
+                    gesture={pan}
+                >
                     <Animated.View
                         style={[
                             stylesheet.container,
@@ -144,8 +146,16 @@ const BottomSheet = forwardRef(
                                 height: activeHeight
                             },
                         ]}>
-                        <View style={stylesheet.lineContainer}>
-                            <View style={stylesheet.line} />
+                        <View 
+                            style={
+                                stylesheet.lineContainer
+                            }
+                        >
+                            <View 
+                                style={
+                                    stylesheet.line
+                                }
+                            />
                         </View>
                         {children}
                     </Animated.View>
