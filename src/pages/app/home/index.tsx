@@ -1,55 +1,108 @@
 import React, {
-    useRef 
+    useCallback,
+    useRef
 } from 'react';
 import {
-    View,
+    Dimensions,
     StyleSheet,
-    TouchableOpacity
+    Button,
+    View
 } from 'react-native';
-import {
-    BottomSheetRefProps 
-} from '../../../components/bottomSheet/types';
 import BottomSheet from '../../../components/bottomSheet';
-import { colors } from '../../../themes/variants/light';
+import {
+    GestureHandlerRootView
+} from 'react-native-gesture-handler';
+import {
+    SafeAreaView
+} from 'react-native-safe-area-context';
+
+export type BottomSheet = {
+    collapse: () => void;
+    expand: () => void;
+}
 
 const HomeScreen = () => {
-    const ref = useRef<BottomSheetRefProps>(null);
+    const bottomSheetRef = useRef<BottomSheet>(null);
+    const bottomSheetRef2 = useRef<BottomSheet>(null);
+    const bottomSheetRef3 = useRef<BottomSheet>(null);
 
-    const onPress =() => {
-        const isActive = ref?.current?.isActive();
-        if (isActive) {
-            ref?.current?.scrollTo(0);
-        } else {
-            ref?.current?.scrollTo(-200);
-        }
-    };
-    
-    return <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={onPress} />
-        <BottomSheet ref={ref}>
-            <View style={{
-                backgroundColor: colors.stronkLight,
-                flex: 1
+    const {
+        height 
+    } = Dimensions.get('screen');
+
+    const pressHandler = useCallback(() => {
+        bottomSheetRef.current?.expand();
+    }, []);
+
+    const pressHandler2 = useCallback(() => {
+        bottomSheetRef2.current?.expand();
+    }, []);
+
+    const pressHandler3 = useCallback(() => {
+        bottomSheetRef3.current?.expand();
+    }, []);
+
+    return (
+        <GestureHandlerRootView 
+            style={{
+                flex: 1 
             }}>
-            </View>
-        </BottomSheet>
-    </View>;
+            <SafeAreaView 
+                style={styles.container}
+            >
+                <View style={
+                    styles.buttonContainer
+                }>
+                    <Button 
+                        onPress={pressHandler}
+                        title="Blank" 
+                    />
+                    <Button
+                        onPress={pressHandler2} 
+                        title="Example 1"
+                    />
+                    <Button
+                        onPress={pressHandler3}
+                        title="Example 2"
+                    />
+                </View>
+                <BottomSheet
+                    activeHeight={height * 1}
+                    backgroundColor={'white'}
+                    backDropColor={'black'}
+                    ref={bottomSheetRef}
+                />
+                <BottomSheet
+                    activeHeight={height * 0.7}
+                    backgroundColor={'#DAD3C8'}
+                    backDropColor={'black'}
+                    ref={bottomSheetRef2}
+                >
+                </BottomSheet>
+                <BottomSheet
+                    backgroundColor={'#FFFFFF'}
+                    activeHeight={height * 0.4}
+                    backDropColor={'black'} 
+                    ref={bottomSheetRef3}
+                >
+                </BottomSheet>
+            </SafeAreaView>
+        </GestureHandlerRootView>
+    );
 };
+
+export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
-        backgroundColor: '#FFF',
-        alignItems: 'center',
         flex: 1,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        justifyContent: 'center',
     },
-    button: {
-        backgroundColor: 'grey',
-        borderRadius: 25,
-        aspectRatio: 1,
-        opacity: 0.6,
-        height: 50,
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginBottom: 20,
     },
 });
-  
-export default HomeScreen;

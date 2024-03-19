@@ -1,8 +1,10 @@
 export type BottomSheetProps = {
-    children?: React.ReactNode;
+    backgroundColor: string;
+    backDropColor: string;
+    activeHeight: number;
 };
 
-export type BottomSheetRefProps = {
-    scrollTo: (destination: number) => void;
-    isActive: () => boolean;
+export type BottomSheetRef = {
+    expand: () => void;
+    close: () => void;
 };

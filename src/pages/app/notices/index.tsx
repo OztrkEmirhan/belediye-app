@@ -1,5 +1,6 @@
 import React, {
-    useEffect
+    useEffect,
+    useState
 } from 'react';
 import {
     TouchableOpacity,
@@ -20,9 +21,15 @@ import {
 import {
     useNavigation
 } from '@react-navigation/native';
+import BottomSheet from '../../../components/bottomSheet';
 
 const NoticesScreen = () => {
     const navigation = useNavigation();
+    const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+
+    const toggleBottomSheet = () => {
+        setBottomSheetVisible(!bottomSheetVisible);
+    };
     
     useEffect(() => {
         navigation.setOptions({
@@ -58,9 +65,17 @@ const NoticesScreen = () => {
         </TouchableOpacity>;
     };
 
-    return <View>
-        <Text>NoticesScreen</Text>
-    </View>;
+    return (
+        <View style={{
+            justifyContent: "center",
+            alignItems: "center",
+            flex: 1
+        }}>
+            <Text>
+                Open Bottom Sheet
+            </Text>
+        </View>
+    );
 };
 
 export default NoticesScreen;

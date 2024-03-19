@@ -9,7 +9,9 @@ import {
 import {
     colors 
 } from './themes/variants/light';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {
+    GestureHandlerRootView
+} from 'react-native-gesture-handler';
 
 function App() {
     return <GestureHandlerRootView style={{

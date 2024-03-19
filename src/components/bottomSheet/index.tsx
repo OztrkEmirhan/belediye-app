@@ -1,138 +1,158 @@
 import React, {
     useImperativeHandle,
-    useCallback
+    useCallback,
+    forwardRef
 } from 'react';
 import stylesheet from './stylesheet';
 import {
+    TouchableWithoutFeedback,
     Dimensions,
-    StyleSheet,
-    View 
+    View
 } from 'react-native';
+import Animated,{
+    useAnimatedStyle,
+    useSharedValue,
+    interpolate,
+    withSpring
+} from 'react-native-reanimated';
 import {
     GestureDetector,
     Gesture
 } from 'react-native-gesture-handler';
-import Animated, {
-    useAnimatedStyle,
-    useSharedValue,
-    Extrapolate,
-    interpolate,
-    withSpring,
-} from 'react-native-reanimated';
 import {
-    BottomSheetRefProps,
-    BottomSheetProps
-} from './types';
+    useSafeAreaInsets
+} from 'react-native-safe-area-context';
 
-const {
-    height: SCREEN_HEIGHT 
-} = Dimensions.get('window');
-
-const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 50;
-
-const BottomSheet = React.forwardRef<BottomSheetRefProps,BottomSheetProps>(
+const BottomSheet = forwardRef(
     ({
-        children 
-    }, ref) => {
-        const translateY = useSharedValue(0);
-        const active = useSharedValue(false);
+        backgroundColor,
+        backDropColor,
+        activeHeight,
+        children
+    }:any, ref) => {
 
-        const scrollTo = useCallback((
-            destination: number
-        ) => {
+        const inset = useSafeAreaInsets();
+        const {
+            height
+        } = Dimensions.get('screen');
+        const newActiveHeight = height - activeHeight;
+        const topAnimation = useSharedValue(height);
+        const context = useSharedValue(0);
+
+        const expand = useCallback(() => {
             'worklet';
-            active.value = destination !== 0;
-            translateY.value = withSpring(destination, {
-                damping: 50 
+            topAnimation.value = withSpring(newActiveHeight, {
+                damping: 100,
+                stiffness: 400,
             });
         }, []);
 
-        const isActive = useCallback(() => {
-            return active.value;
+        const close = useCallback(() => {
+            'worklet';
+            topAnimation.value = withSpring(height, {
+                damping: 100,
+                stiffness: 400,
+            });
         }, []);
 
-        useImperativeHandle(ref, () => ({
-            scrollTo,
-            isActive 
-        }), [
-            scrollTo,
-            isActive
-        ]);
+        useImperativeHandle(
+            ref,
+            () => ({
+                expand,
+                close
+            }),
+            [
+                expand,
+                close
+            ],
+        );
 
-        const context = useSharedValue({
-            y: 0 
-        });
-        const gesture = Gesture.Pan()
-            .onStart(() => {
-                context.value = {
-                    y: translateY.value 
-                };
-            })
-            .onUpdate((event) => {
-                translateY.value = event.translationY + context.value.y;
-                translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
-            })
-            .onEnd(() => {
-                if (translateY.value > -SCREEN_HEIGHT / 3) {
-                    scrollTo(0);
-                } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
-                    scrollTo(MAX_TRANSLATE_Y);
-                }
-            });
-
-        const rBottomSheetStyle = useAnimatedStyle(() => {
-            const borderRadius = interpolate(
-                translateY.value,
-                [MAX_TRANSLATE_Y + 50, MAX_TRANSLATE_Y],
-                [25, 5],
-                Extrapolate.CLAMP
-            );
-
+        const animationStyle = useAnimatedStyle(() => {
+            const top = topAnimation.value;
             return {
-                borderRadius,
-                transform: [{
-                    translateY: translateY.value 
-                }],
+                top,
+            };
+        });
+        const backDropAnimation = useAnimatedStyle(() => {
+            const opacity = interpolate(
+                topAnimation.value,
+                [height, newActiveHeight],
+                [0, 0.5],
+            );
+            const display = opacity === 0 ? 'none' : 'flex';
+            return {
+                opacity,
+                display
             };
         });
 
-        return (
-            <GestureDetector 
-                gesture={gesture}
-            >
-                <Animated.View style={[
-                    stylesheet.bottomSheetContainer,
-                    rBottomSheetStyle
-                ]}
-                >
-                    <View style={
-                        stylesheet.line
-                    }
-                    />
-                    {children}
-                </Animated.View>
-            </GestureDetector>
-        );
-    }
-);
+        const pan = Gesture.Pan()
+            .onBegin(() => {
+                context.value = topAnimation.value;
+            })
+            .onUpdate(event => {
+                if (event.translationY < 0) {
+                    topAnimation.value = withSpring(newActiveHeight, {
+                        stiffness: 400,
+                        damping: 100,
+                    });
+                } else {
+                    topAnimation.value = withSpring(context.value + event.translationY, {
+                        stiffness: 400,
+                        damping: 100,
+                    });
+                }
+            })
+            .onEnd(() => {
+                if (topAnimation.value > newActiveHeight + 50) {
+                    topAnimation.value = withSpring(height, {
+                        stiffness: 400,
+                        damping: 100,
+                    });
+                } else {
+                    topAnimation.value = withSpring(newActiveHeight, {
+                        stiffness: 400,
+                        damping: 100,
+                    });
+                }
+            });
 
-const styles = StyleSheet.create({
-    bottomSheetContainer: {
-        height: SCREEN_HEIGHT,
-        width: '100%',
-        backgroundColor: 'white',
-        position: 'absolute',
-        top: SCREEN_HEIGHT,
-        borderRadius: 25,
+        return (
+            <>
+                <TouchableWithoutFeedback
+                    onPress={() => {
+                        close();
+                    }}>
+                    <Animated.View
+                        style={[
+                            stylesheet.backDrop,
+                            backDropAnimation,
+                            {
+                                backgroundColor: backDropColor
+                            },
+                        ]}
+                    />
+                </TouchableWithoutFeedback>
+                <GestureDetector gesture={pan}>
+                    <Animated.View
+                        style={[
+                            stylesheet.container,
+                            animationStyle,
+                            {
+                                backgroundColor: backgroundColor,
+                                paddingBottom: inset.bottom,
+                                height: activeHeight
+                            },
+                        ]}>
+                        <View style={stylesheet.lineContainer}>
+                            <View style={stylesheet.line} />
+                        </View>
+                        {children}
+                    </Animated.View>
+                </GestureDetector>
+            </>
+        );
     },
-    line: {
-        width: 75,
-        height: 4,
-        backgroundColor: 'grey',
-        alignSelf: 'center',
-        marginVertical: 15,
-        borderRadius: 2,
-    },
-});
+);
 
 export default BottomSheet;

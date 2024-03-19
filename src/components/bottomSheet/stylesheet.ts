@@ -1,27 +1,34 @@
 import {
-    Dimensions,
     StyleSheet
 } from "react-native";
 
-const {
-    height: SCREEN_HEIGHT 
-} = Dimensions.get('window');
-
-export default StyleSheet.create({
-    bottomSheetContainer: {
-        backgroundColor: 'white',
-        height: SCREEN_HEIGHT,
+const stylesheet = StyleSheet.create({
+    container: {
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
         position: 'absolute',
-        top: SCREEN_HEIGHT,
-        borderRadius: 25,
-        width: '100%'
+        bottom: 0,
+        right: 0,
+        left: 0
+    },
+    lineContainer: {
+        alignItems: 'center',
+        marginVertical: 10
     },
     line: {
-        backgroundColor: 'grey',
-        alignSelf: 'center',
-        marginVertical: 15,
-        borderRadius: 2,
-        width: 75,
+        backgroundColor: 'black',
+        borderRadius: 20,
+        width: 50,
         height: 4
     },
+    backDrop: {
+        position: 'absolute',
+        display: 'none',
+        bottom: 0,
+        right: 0,
+        left: 0,
+        top: 0
+    }
 });
+
+export default stylesheet;
