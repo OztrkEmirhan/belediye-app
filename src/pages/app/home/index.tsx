@@ -5,7 +5,6 @@ import React, {
 import {
     Dimensions,
     StyleSheet,
-    Button,
     View
 } from 'react-native';
 import BottomSheet from '../../../components/bottomSheet';
@@ -15,16 +14,15 @@ import {
 import {
     SafeAreaView
 } from 'react-native-safe-area-context';
-
-export type BottomSheet = {
-    collapse: () => void;
-    expand: () => void;
-}
+import Button from '../../../components/button';
+import {
+    BottomSheetRef
+} from '../../../components/bottomSheet/types';
 
 const HomeScreen = () => {
-    const bottomSheetRef2 = useRef<BottomSheet>(null);
-    const bottomSheetRef3 = useRef<BottomSheet>(null);
-    const bottomSheetRef = useRef<BottomSheet>(null);
+    const bottomSheetRef2 = useRef<BottomSheetRef>(null);
+    const bottomSheetRef3 = useRef<BottomSheetRef>(null);
+    const bottomSheetRef = useRef<BottomSheetRef>(null);
 
     const {
         height 
@@ -59,15 +57,15 @@ const HomeScreen = () => {
                 >
                     <Button
                         onPress={pressHandler}
-                        title=""
+                        title="BottomSheet 1"
                     />
                     <Button
                         onPress={pressHandler2} 
-                        title=""
+                        title="BottomSheet 2"
                     />
                     <Button
                         onPress={pressHandler3}
-                        title=""
+                        title="BottomSheet 3"
                     />
                 </View>
                 <BottomSheet

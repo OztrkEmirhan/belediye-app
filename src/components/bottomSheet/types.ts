@@ -5,6 +5,6 @@ export type BottomSheetProps = {
 };
 
 export type BottomSheetRef = {
+    collapse: () => void;
     expand: () => void;
-    close: () => void;
 };
